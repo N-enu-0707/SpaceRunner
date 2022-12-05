@@ -7,13 +7,13 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jump = 5f;
+    //[SerializeField] private float dump = 0.9f;   // ジャンプの速度の減衰
     [SerializeField] private GroundCheck ground;
     [SerializeField] private HitCheck hit;
 
     private Rigidbody2D rigid2D = null;
     private Animator anime = null;
     private bool isGround = false;
-    private bool isHit = false;
     private string goalTag = "Finish";
 
     private void Start()
@@ -26,67 +26,49 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isHit == false)
-        {
-            rigid2D.velocity = new Vector2(speed, rigid2D.velocity.y);   //強制右スクロール
-        }
+        rigid2D.velocity = new Vector2(speed, rigid2D.velocity.y);   //強制右スクロール
     }
 
     private void Update()
     {
         isGround = ground.IsGround();
-        isHit = hit.IsHit();
         
         // 地面にいる時
-        if (isGround == true)
+        if (isGround)
         {
             anime.SetBool("jump", false);
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))   // ジャンプ
             {
+                // this.rigid2D.velocity = new Vector2(rigid2D.velocity.x, jump);
                 rigid2D.AddForce(transform.up * jump, ForceMode2D.Impulse);
                 anime.SetBool("jump", true);
                 Debug.Log("ジャンプした");
             }
         }
+
         // 空中にいる時
-        else
+        if (isGround == false)
         {
             anime.SetBool("jump", true);
-        }
 
-        // 壁に当たった時
-        if (isHit == true)
-        {
-            anime.Play("Hit");
-            Debug.Log("壁に当たった");
-        }
-
-        // ヒットアニメーションが完了したら
-        if (IsHitAnimeEnd() == true)
-        {
-            isHit = false;
-            SceneManager.LoadScene("GameScene");
-            Debug.Log("コンティニュー");
-        }
-    }
-
-    // ヒットアニメーションが完了しているかどうか
-    public bool IsHitAnimeEnd()
-    {
-        if (isHit && anime != null)
-        {
-            AnimatorStateInfo currentState = anime.GetCurrentAnimatorStateInfo(0);
-
-            if (currentState.IsName("Hit"))
+            //if (Input.GetMouseButton(0) == false)
             {
-                if (currentState.normalizedTime >= 1)
+                //if (this.rigid2D.velocity.y > 0)
                 {
-                    return true;
+                    //this.rigid2D.velocity *= this.dump;
                 }
             }
         }
-        return false;
+
+        // ヒットアニメーションが完了したら
+        if (hit.IsHitAnimeEnd())
+        {
+            // スタート地点に戻る
+            this.transform.position = new Vector3(-8, 2, 0);
+            anime.Play("Run");
+            Debug.Log("コンティニュー");
+        }
     }
 
     // ゴールしたら
