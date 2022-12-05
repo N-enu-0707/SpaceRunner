@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float jump = 5f;
-    //[SerializeField] private float dump = 0.9f;   // ジャンプの速度の減衰
+    [SerializeField] private float jump = 7f;
+    [SerializeField] private float dump = 0.9f;   // ジャンプの速度の減衰
     [SerializeField] private GroundCheck ground;
     [SerializeField] private HitCheck hit;
 
@@ -38,12 +38,11 @@ public class Player : MonoBehaviour
         {
             anime.SetBool("jump", false);
 
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))   // ジャンプ
+            if (Input.GetMouseButtonDown(0))
             {
-                // this.rigid2D.velocity = new Vector2(rigid2D.velocity.x, jump);
-                rigid2D.AddForce(transform.up * jump, ForceMode2D.Impulse);
+                this.rigid2D.velocity = new Vector2(rigid2D.velocity.x, jump);   // ジャンプ
                 anime.SetBool("jump", true);
-                Debug.Log("ジャンプした");
+                Debug.Log("ジャンプ");
             }
         }
 
@@ -52,11 +51,11 @@ public class Player : MonoBehaviour
         {
             anime.SetBool("jump", true);
 
-            //if (Input.GetMouseButton(0) == false)
+            if (Input.GetMouseButton(0) == false)
             {
-                //if (this.rigid2D.velocity.y > 0)
+                if (this.rigid2D.velocity.y > 0)
                 {
-                    //this.rigid2D.velocity *= this.dump;
+                    this.rigid2D.velocity *= this.dump;
                 }
             }
         }
