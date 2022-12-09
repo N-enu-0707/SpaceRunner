@@ -5,18 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class StartDirector : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void GameStart()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene("GameScene");
-        }
+        SceneManager.LoadScene("Stage1");
+        Debug.Log("ゲームスタート");
     }
 }

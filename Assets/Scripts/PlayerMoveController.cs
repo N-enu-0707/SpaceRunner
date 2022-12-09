@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class PlayerMoveController : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jump = 7f;
@@ -14,12 +13,15 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigid2D = null;
     private Animator anime = null;
     private bool isGround = false;
-    private string goalTag = "Finish";
+
+    GameObject startPos;
 
     private void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
+
+        startPos = GameObject.Find("RestartPosition");
 
         Application.targetFrameRate = 60;
     }
@@ -42,7 +44,7 @@ public class Player : MonoBehaviour
             {
                 this.rigid2D.velocity = new Vector2(rigid2D.velocity.x, jump);   // ジャンプ
                 anime.SetBool("jump", true);
-                Debug.Log("ジャンプ");
+                // Debug.Log("ジャンプ");
             }
         }
 
@@ -64,18 +66,16 @@ public class Player : MonoBehaviour
         if (hit.IsHitAnimeEnd())
         {
             // スタート地点に戻る
-            this.transform.position = new Vector3(-8, 2, 0);
+            this.transform.position = new Vector3(startPos.transform.position.x, startPos.transform.position.y, 0);
             anime.Play("Run");
-            Debug.Log("コンティニュー");
+            // Debug.Log("コンティニュー");
         }
-    }
 
-    // ゴールしたら
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == goalTag)
+        // 落下ミスしたら
+        if (this.transform.position.y < -7)
         {
-            SceneManager.LoadScene("ClearScene");
+            this.transform.position = new Vector3(startPos.transform.position.x, startPos.transform.position.y, 0);
+            Debug.Log("落下ミス");
         }
     }
 }

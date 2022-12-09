@@ -5,18 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class ClearDirector : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void ReturnToTitle()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene("GameScene");
-        }
+        SceneManager.LoadScene("TitleScene");
+        Debug.Log("ƒ^ƒCƒgƒ‹‰æ–Ê‚É–ß‚é");
     }
 }
