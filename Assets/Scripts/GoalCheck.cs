@@ -10,15 +10,22 @@ public class GoalCheck : MonoBehaviour
     [SerializeField] private GameObject stageClearText = null;
     [SerializeField] private GameObject nextStageButton = null;
     [SerializeField] private GameObject returnToTitleButton = null;
+    [SerializeField] private GameObject player;
 
-    GameObject player;
     GameObject distanceText;
+    PlayerMoveController playerMoveController;
+    Rigidbody2D playerRigid;
+    Animator playerAnim;
+    Animator flagAnim;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.player = GameObject.Find("Player");
         this.distanceText = GameObject.Find("Distance");
+        this.playerMoveController = player.GetComponent<PlayerMoveController>();
+        this.playerRigid = player.GetComponent<Rigidbody2D>();
+        this.playerAnim = player.GetComponent<Animator>();
+        this.flagAnim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -32,30 +39,30 @@ public class GoalCheck : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            this.player.GetComponent<PlayerMoveController>().enabled = false;
-            this.player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            this.player.GetComponent<Rigidbody2D>().gravityScale = 0;
-            this.player.GetComponent<Animator>().speed = 0;
-            this.GetComponent<Animator>().speed = 0;
+            this.playerMoveController.enabled = false;
+            this.playerRigid.velocity = Vector2.zero;
+            this.playerRigid.gravityScale = 0;
+            this.playerAnim.speed = 0;
+            this.flagAnim.speed = 0;
 
             this.distanceText.SetActive(false);
             this.stageClearText.SetActive(true);
             this.nextStageButton.SetActive(true);
             this.returnToTitleButton.SetActive(true);
 
-            Debug.Log("ステージクリア");
+            // Debug.Log("ステージクリア");
         }
     }
 
     public void LoadNextScene()
     {
         SceneManager.LoadScene(nextSceneName);
-        Debug.Log("次のステージへ");
+        // Debug.Log("次のステージへ");
     }
 
     public void LoadTitleScene()
     {
         SceneManager.LoadScene("TitleScene");
-        Debug.Log("タイトル画面に戻る");
+        // Debug.Log("タイトル画面に戻る");
     }
 }

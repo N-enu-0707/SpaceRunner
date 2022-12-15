@@ -18,7 +18,7 @@ public class HitCheck : MonoBehaviour
         if (collision.collider.tag == groundTag)
         {
             playerAnime.Play("Hit");
-            Debug.Log("•Ç‚É“–‚½‚Á‚½");
+            // Debug.Log("•Ç‚É“–‚½‚Á‚½");
         }
     }
 

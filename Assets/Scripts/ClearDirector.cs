@@ -8,6 +8,6 @@ public class ClearDirector : MonoBehaviour
     public void ReturnToTitle()
     {
         SceneManager.LoadScene("TitleScene");
-        Debug.Log("タイトル画面に戻る");
+        // Debug.Log("タイトル画面に戻る");
     }
 }

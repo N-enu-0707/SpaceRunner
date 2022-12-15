@@ -7,8 +7,8 @@ public class GameDirector : MonoBehaviour
 {
     GameObject player;
     GameObject goal;
-    GameObject scoreText;
-    GameObject distance;
+    TextMeshProUGUI scoreText;
+    TextMeshProUGUI distance;
 
     private int score = 0;
 
@@ -17,15 +17,15 @@ public class GameDirector : MonoBehaviour
     {
         this.player = GameObject.Find("Player");
         this.goal = GameObject.Find("GoalFlag");
-        this.scoreText = GameObject.Find("ScoreText");
-        this.distance = GameObject.Find("Distance");
+        this.scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+        this.distance = GameObject.Find("Distance").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
         float length = this.goal.transform.position.x - this.player.transform.position.x;
-        this.distance.GetComponent<TextMeshProUGUI>().text = "Distance:" + length.ToString("F1") + "m";
+        this.distance.text = "Distance:" + length.ToString("F1") + "m";
     }
 
     public void AddAmount(int point)
@@ -35,6 +35,6 @@ public class GameDirector : MonoBehaviour
         {
             this.score = 0;
         }
-        this.scoreText.GetComponent<TextMeshProUGUI>().text = "Score " + score + "pt";
+        this.scoreText.text = "Score " + score + "pt";
     }
 }

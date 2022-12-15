@@ -8,6 +8,6 @@ public class StartDirector : MonoBehaviour
     public void GameStart()
     {
         SceneManager.LoadScene("Stage1");
-        Debug.Log("ゲームスタート");
+        // Debug.Log("ゲームスタート");
     }
 }

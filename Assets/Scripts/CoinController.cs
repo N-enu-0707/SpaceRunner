@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class CoinController : MonoBehaviour
 {
-    // GameObject hitCheck;
-    GameObject gameDirector;
+    GameDirector gameDirector;
 
     // Start is called before the first frame update
     void Start()
     {
-        // this.hitCheck = GameObject.Find("HitCheck");
-        this.gameDirector = GameObject.Find("GameDirector");
+        this.gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
     }
 
     // Update is called once per frame
@@ -24,7 +22,7 @@ public class CoinController : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            this.gameDirector.GetComponent<GameDirector>().AddAmount(10);
+            this.gameDirector.AddAmount(10);
             Destroy(this.gameObject);
         }
     }

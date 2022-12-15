@@ -14,7 +14,7 @@ public class PlayerMoveController : MonoBehaviour
     private Animator anime = null;
     private bool isGround = false;
 
-    GameObject gameDirector;
+    GameDirector gameDirector;
     GameObject startPos;
 
     private void Start()
@@ -22,7 +22,7 @@ public class PlayerMoveController : MonoBehaviour
         rigid2D = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
 
-        this.gameDirector = GameObject.Find("GameDirector");
+        this.gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
         startPos = GameObject.Find("RestartPosition");
 
         Application.targetFrameRate = 60;
@@ -71,15 +71,15 @@ public class PlayerMoveController : MonoBehaviour
             this.transform.position = new Vector3(startPos.transform.position.x, startPos.transform.position.y, 0);
             anime.Play("Run");
             // Debug.Log("コンティニュー");
-            this.gameDirector.GetComponent<GameDirector>().AddAmount(-20);
+            this.gameDirector.AddAmount(-20);
         }
 
         // 落下ミスしたら
         if (this.transform.position.y < -7)
         {
             this.transform.position = new Vector3(startPos.transform.position.x, startPos.transform.position.y, 0);
-            Debug.Log("落下ミス");
-            this.gameDirector.GetComponent<GameDirector>().AddAmount(-20);
+            // Debug.Log("落下ミス");
+            this.gameDirector.AddAmount(-20);
         }
     }
 }
