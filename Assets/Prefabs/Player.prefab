@@ -294,5 +294,5 @@ MonoBehaviour:
   speed: 5
   jump: 7
   dump: 0.9
-  ground: {fileID: 8750075207526339305}
-  hit: {fileID: 8750075208003216816}
+  groundCheck: {fileID: 8750075207526339305}
+  hitCheck: {fileID: 8750075208003216816}

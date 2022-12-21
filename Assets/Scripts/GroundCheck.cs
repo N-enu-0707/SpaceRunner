@@ -6,44 +6,25 @@ public class GroundCheck : MonoBehaviour
 {
     private string groundTag = "Ground";
     private bool isGround = false;
-    private bool isGroundEnter, isGroundStay, isGroundExit;
 
-    public bool IsGround()
+    public bool IsGroundFlag
     {
-        if (isGroundEnter || isGroundStay)
-        {
-            isGround = true;
-        }
-        else if (isGroundExit)
-        {
-            isGround = false;
-        }
-
-        isGroundEnter = false;
-        isGroundStay = false;
-        isGroundExit = false;
-        return isGround;
+        get { return this.isGround; }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == groundTag)
         {
-            isGroundEnter = true;
+            isGround = true;
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == groundTag)
-        {
-            isGroundStay = true;
-        }
-    }
+    
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == groundTag)
         {
-            isGroundExit = true;
+            isGround = false;
         }
     }
 }

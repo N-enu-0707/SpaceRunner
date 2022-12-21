@@ -7,12 +7,11 @@ public class PlayerMoveController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jump = 7f;
     [SerializeField] private float dump = 0.9f;   // ジャンプの速度の減衰
-    [SerializeField] private GroundCheck ground;
-    [SerializeField] private HitCheck hit;
+    [SerializeField] private GroundCheck groundCheck;
+    [SerializeField] private HitCheck hitCheck;
 
     private Rigidbody2D rigid2D = null;
     private Animator anime = null;
-    private bool isGround = false;
 
     GameDirector gameDirector;
     GameObject startPos;
@@ -34,11 +33,9 @@ public class PlayerMoveController : MonoBehaviour
     }
 
     private void Update()
-    {
-        isGround = ground.IsGround();
-        
+    {   
         // 地面にいる時
-        if (isGround)
+        if (groundCheck.IsGroundFlag)
         {
             anime.SetBool("jump", false);
 
@@ -51,7 +48,7 @@ public class PlayerMoveController : MonoBehaviour
         }
 
         // 空中にいる時
-        if (isGround == false)
+        if (groundCheck.IsGroundFlag == false)
         {
             anime.SetBool("jump", true);
 
@@ -65,7 +62,7 @@ public class PlayerMoveController : MonoBehaviour
         }
 
         // ヒットアニメーションが完了したら
-        if (hit.IsHitAnimeEnd())
+        if (hitCheck.IsHitAnimeEnd())
         {
             // スタート地点に戻る
             this.transform.position = new Vector3(startPos.transform.position.x, startPos.transform.position.y, 0);
